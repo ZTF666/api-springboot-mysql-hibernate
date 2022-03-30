@@ -1,5 +1,6 @@
 package app.api;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -9,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.util.StringUtils;
+
 
 @Service
 public class ProductService {
@@ -47,7 +51,23 @@ public class ProductService {
 			product.setName(name);
 			product.setPrice(price);
 		}
+	}
 	
+	//new addition
+	public void saveWithPicture(MultipartFile file,String name, Float price) {
+		Product product = new Product();
+		product.setName(name);
+		product.setPrice(price);
+		String fn = StringUtils.cleanPath(file.getOriginalFilename());
+		if(fn.contains("..")) {
+			System.out.println("invalide file");
+		}
+		try {
+			product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		repository.save(product);
 	}
 	
 	
