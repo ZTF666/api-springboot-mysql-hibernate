@@ -2,12 +2,8 @@ package app.api;
 
 import java.util.Base64;
 import java.util.List;
-import java.util.NoSuchElementException;
-
 import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -68,6 +64,25 @@ public class ProductService {
 			e.printStackTrace();
 		}
 		repository.save(product);
+	}
+	//update with picture
+	@Transactional
+	public void updateWithPicture(Integer id,MultipartFile file,String name,Float price) {
+		Product product=repository.findById(id).orElseThrow(()-> new IllegalStateException("does not exist"));
+		if(name !=null && name.length()>0 && price !=null && file !=null) {
+			String fn = StringUtils.cleanPath(file.getOriginalFilename());
+			if(fn.contains("..")) {
+				System.out.println("invalide file");
+			}
+			try {
+				product.setImage(Base64.getEncoder().encodeToString(file.getBytes()));
+				product.setName(name);
+				product.setPrice(price);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	

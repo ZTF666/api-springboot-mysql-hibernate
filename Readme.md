@@ -23,27 +23,31 @@ Spring boot , Mysql & Hibernate .
 # End points 
 @POST
 ```http
- http:localhost:8080/api/v1/product 
+http://localhost:8080/api/v1/product 
 ```
 @POST [Product With Picture]
 ```http
- http:localhost:8080/api/v1/product/pic
+http://localhost:8080/api/v1/product/pic
 ```
 @GET 
 ```
-http:localhost:8080/api/v1/product
+http://localhost:8080/api/v1/product
 ```
-@GET
+@GET BY ID
 ```
- BY ID http:localhost:8080/api/v1/product/:id
+http://localhost:8080/api/v1/product/:id
 ```
 @PUT
 ```
- http:localhost:8080/api/v1/product/:id
+http://localhost:8080/api/v1/product/:id
+``` 
+@PUT [Product With Picture]
+```
+http://localhost:8080/api/v1/product/pic/:id
 ```
 @DELETE
 ```
- http:localhost:8080/api/v1/product/:id 
+http://localhost:8080/api/v1/product/:id 
 ```
 
 # Database Schema

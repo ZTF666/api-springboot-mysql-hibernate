@@ -65,6 +65,17 @@ public class ProductController {
 			return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 		}
 	}
+	//update with picture
+	@PutMapping(path ="/pic/{id}")
+	public  ResponseEntity<?> updateProductWithPicture(@PathVariable Integer id,@RequestParam("file") MultipartFile file,@RequestParam("name") String name,@RequestParam("price") Float price) {
+		try {
+			Product exist = service.get(id);
+			service.updateWithPicture(id,file , name, price);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (NoSuchElementException e) {
+			return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+		}
+	}
 	
 	@DeleteMapping(path="{id}")
 	public void deleteProduct(@PathVariable Integer id) {
